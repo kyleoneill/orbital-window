@@ -1,0 +1,9 @@
+[
+  {"name":  "Moho", "orbital_period":  2215754},
+  {"name":  "Eve", "orbital_period":  5657995},
+  {"name":  "Kerbin", "orbital_period":  9203544},
+  {"name":  "Duna", "orbital_period":  17315400},
+  {"name":  "Dres", "orbital_period":  47893063},
+  {"name":  "Jool", "orbital_period":  104661432},
+  {"name":  "Eeloo", "orbital_period":  156992048}
+]
