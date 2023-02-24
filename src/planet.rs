@@ -41,7 +41,7 @@ impl OrbitalMechanics {
         Ok(())
     }
 
-    pub fn get_orbital_period(&self, target_planet: &Planet, time_unit: TimeUnit) -> f32 {
+    pub fn get_synodic_orbital_period(&self, target_planet: &Planet, time_unit: TimeUnit) -> f32 {
         if self.current_planet == target_planet.name {
             return 0 as f32;
         }
@@ -61,7 +61,7 @@ impl OrbitalMechanics {
         Self::convert_time_from_seconds(absolute, time_unit)
     }
 
-    pub fn get_next_transfer_window(&self, transfer_window: f32, time_unit: TimeUnit) -> f32 {
+    pub fn get_next_synodic_period(&self, transfer_window: f32, time_unit: TimeUnit) -> f32 {
         let time_into_current_window = self.total_time_passed % transfer_window;
         Self::convert_time_from_seconds(transfer_window - time_into_current_window, time_unit)
     }

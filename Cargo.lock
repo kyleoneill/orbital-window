@@ -3,15 +3,6 @@
 version = 3
 
 [[package]]
-name = "OrbitalWindows"
-version = "0.1.0"
-dependencies = [
- "eframe",
- "egui",
- "tracing-subscriber",
-]
-
-[[package]]
 name = "ab_glyph"
 version = "0.2.20"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -1398,6 +1389,15 @@ dependencies = [
  "redox_syscall 0.2.16",
  "wasm-bindgen",
  "web-sys",
+]
+
+[[package]]
+name = "orbital_windows"
+version = "0.1.0"
+dependencies = [
+ "eframe",
+ "egui",
+ "tracing-subscriber",
 ]
 
 [[package]]

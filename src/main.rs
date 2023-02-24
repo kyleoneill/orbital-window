@@ -1,9 +1,9 @@
 #![cfg_attr(not(debug_assertions), windows_subsystem = "windows")]
 
 mod planet;
-use planet::{Planet, TimeUnit, OrbitalMechanics};
+use planet::{TimeUnit, OrbitalMechanics};
 use eframe::{egui, Frame};
-use egui::{Context, InnerResponse, Ui, Vec2, vec2};
+use egui::{Context, vec2};
 use std::default::Default;
 use eframe::epaint::Color32;
 use egui::RichText;
@@ -18,7 +18,7 @@ fn main() -> Result<(), eframe::Error> {
     eframe::run_native(
         "Orbital Windows",
         options,
-        Box::new(|cc| Box::new(MyApp::new()))
+        Box::new(|_cc| Box::new(MyApp::new()))
     )
 }
 
@@ -46,7 +46,7 @@ impl MyApp {
 }
 
 impl eframe::App for MyApp {
-    fn update(&mut self, ctx: &Context, frame: &mut Frame) {
+    fn update(&mut self, ctx: &Context, _frame: &mut Frame) {
         self.orbital_mechanics.current_planet = self.current_planet.clone();
         self.orbital_mechanics.selected_planet = self.selected_planet.clone();
         match self.orbital_mechanics.set_time(&self.current_year, &self.current_day) {
@@ -57,7 +57,7 @@ impl eframe::App for MyApp {
             // TODO: Set the spacing here - ui.set_style() <- this needs some style struct
             ui.heading("Orbital Window Calculator");
             ui.horizontal(|ui| {
-                let name_label = ui.label("Current Planet: ");
+                ui.label("Current Planet: ");
                 egui::ComboBox::from_label("Select current planet")
                     .selected_text(format!("{}", self.current_planet))
                     .show_ui(ui, |ui| {
@@ -95,8 +95,8 @@ impl eframe::App for MyApp {
                 .spacing(vec2(50f32, 0f32))
                 .show(ui, |ui| {
                     ui.label("Planet Name");
-                    ui.label("Transfer Window Every x Days");
-                    ui.label("Days until next transfer window begins");
+                    ui.label("Synodic Period Length");
+                    ui.label("Days until next synodic period begins");
                     ui.label("Days until optimal launch");
                     ui.end_row();
                     for planet in &self.orbital_mechanics.planets {
@@ -106,10 +106,10 @@ impl eframe::App for MyApp {
                         else {
                             ui.label(format!("{}", planet.name));
                         }
-                        let transfer_window = self.orbital_mechanics.get_orbital_period(&planet, TimeUnit::Seconds);
-                        let next_transfer_window = self.orbital_mechanics.get_next_transfer_window(transfer_window, TimeUnit::Days);
-                        ui.label(format!("{:.1}", OrbitalMechanics::convert_time_from_seconds(transfer_window, TimeUnit::Days)));
-                        ui.label(format!("{:.1}", next_transfer_window));
+                        let synodic_orbital_period = self.orbital_mechanics.get_synodic_orbital_period(&planet, TimeUnit::Seconds);
+                        let next_synodic_begins = self.orbital_mechanics.get_next_synodic_period(synodic_orbital_period, TimeUnit::Days);
+                        ui.label(format!("{:.1}", OrbitalMechanics::convert_time_from_seconds(synodic_orbital_period, TimeUnit::Days)));
+                        ui.label(format!("{:.1}", next_synodic_begins));
                         ui.label("TODO");
                         ui.end_row();
                     }
